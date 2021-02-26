@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleSheet, Text, View, Button, TouchableHighlight } from 'react-native';
+import {StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
-const Cita = ({item}) => {
+//componente Cita
+const Cita = ({cita, pacienteEliminar}) => {
   
-  const dialogiEliminar = ()=> {
-    console.log('Eliminado......')
-    alert('ILOVIU BRO')
+  const dialogiEliminar = (id) => {
+    console.log('Boton fue precionado. . .');
+    pacienteEliminar(id);
   }
 
 
@@ -13,19 +14,19 @@ const Cita = ({item}) => {
     <View style={styles.cita}>
       <View>
         <Text style={styles.label}>Paciente: </Text>
-        <Text style={styles.texto}> {item.paciente} </Text>
+        <Text style={styles.texto}> {cita.paciente} </Text>
       </View>
       <View>
         <Text style={styles.label}>Propietario: </Text>
-        <Text style={styles.texto}> {item.propietario} </Text>
+        <Text style={styles.texto}> {cita.propietario} </Text>
       </View>
       <View>
         <Text style={styles.label}>Sintomas: </Text>
-        <Text style={styles.texto}> {item.sintomas} </Text>
+        <Text style={styles.texto}> {cita.sintomas} </Text>
       </View>
 
       <View>
-        <TouchableHighlight onPress={ ()=> dialogiEliminar() } style={styles.btnEliminar}>
+        <TouchableHighlight onPress={  () => dialogiEliminar(cita.id) } style={styles.btnEliminar}>
           <Text style={styles.textoEliminar}> Eliminar &times; </Text>
         </TouchableHighlight>
       </View>
