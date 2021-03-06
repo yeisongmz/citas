@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, FlatList, Button} from 'react-native';
 import Cita from './componentes/Citas';
+import Formulario from './componentes/Formulario';
 
 
 const App = () => {
@@ -48,8 +49,8 @@ const App = () => {
     <View style={styles.contenedor}>
       <Text style={styles.titulo}> Aministrador de citas </Text>
       {/*<Button title='Agregar' onPress={ agregarPacientes}  />*/}
+      <Formulario/>
       <Text style={styles.titulo}> { citas.length > 0 ? 'Administra tus citas' : 'No hay citas, agrega una!' } </Text>
-
       <FlatList
         data={citas}
         renderItem={ ({item}) => <Cita cita={item} pacienteEliminar={eliminarPaciente} /> }

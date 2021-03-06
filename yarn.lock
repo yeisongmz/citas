@@ -1044,6 +1044,13 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
+"@react-native-community/datetimepicker@^3.0.9":
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.0.9.tgz#14e96c0a9049d76165f77ded95251e50c596b910"
+  integrity sha512-8Hel5K2xQNJsGQleUT5fheO60aO0/KhP9nkbDzfGgv3Cdckrf2xWQs0JK3xUhuDoUztpMZS45jqE2WPS7fBdgA==
+  dependencies:
+    invariant "^2.2.4"
+
 "@react-native-community/eslint-config@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/eslint-config/-/eslint-config-1.1.0.tgz#2dacad06dd44d13e778510864473fc6091f080c0"
@@ -5335,6 +5342,13 @@ react-is@^16.12.0, react-is@^16.8.1, react-is@^16.8.4, react-is@^16.8.6:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
+
+react-native-modal-datetime-picker@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-9.2.0.tgz#6a5fe70dd0dc86e7f594b76c1c84bb2d9796619a"
+  integrity sha512-8/AB4UJ56oytw9UwrUf/VouI4TNmLUEedKnvfdybi8Nse3nanCN8LagEUR6tuFxFT6aM6bCJyARiReznqDIwHA==
+  dependencies:
+    prop-types "^15.7.2"
 
 react-native@0.63.4:
   version "0.63.4"
