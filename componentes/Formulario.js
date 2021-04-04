@@ -1,11 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { Button, StyleSheet, Text, TextInput, View, TouchableHighlight, Alert, ScrollView,} from 'react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
+import shortid from 'shortid';
 
 //componente formulario
-const Formulario = () => {
+const Formulario = ({citas, setCitas, guardarMostrarForm}) => {
+    const [paciente, guardarPaciente] = useState('');
+    const [propietario, guardarPropietario] = useState('');
+    const [telefono, guardarTelefono] = useState('');
     const [fecha, guardarFecha] = useState('');
     const [hora, guardarHora] = useState('');
+    const [sintomas, guardarSintomas] = useState('');
+
+
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
 
@@ -18,15 +25,15 @@ const Formulario = () => {
     };
 
     const confirmarFecha = (date) => {
-        const opciones = { year: 'numeric', month: 'long', day: '2-digit'};
+        const opciones = { year: 'numeric', month: 'long', day: '2-digit', hour12: false };
         guardarFecha(date.toLocaleDateString('es-ES', opciones));
-        alert(date.toLocaleDateString('es-ES', opciones));
         hideDatePicker();
     };
 
     // muestra o oculta el time picker
 
     const showTimePicker = () => {
+        //console.log('entró');
         setTimePickerVisibility(true);
     };
 
@@ -34,36 +41,83 @@ const Formulario = () => {
         setTimePickerVisibility(false);
     };
 
-    const confirmarHora = (date) => {
-        alert(date)
+    const confirmarHora = (hora) => {
+        const opciones = { hour: 'numeric', minute: '2-digit' };
+        guardarHora(hora.toLocaleString('en-US', opciones));
         hideTimePicker();
+       // console.log('fin')
     };
 
+    //crear nueva cota
+
+    const crearNuevaCita = () => {
+        console.log('ha presionado el boton crear nueva cita');
+        if (paciente.trim() === '' ||
+            propietario.trim() === '' ||
+            telefono.trim() === '' ||
+            fecha.trim() === '' ||
+            hora.trim() === '' ||
+            sintomas.trim() === '') {
+            //falla la validacion
+            console.log('ha fallado crear nueva cita');
+            return;
+        }
+
+        // pasa la validacion
+         
+        const cita = { paciente, propietario, telefono, fecha, hora, sintomas }
+        cita.id = shortid.generate();
+        //console.warn(cita)
+        // Agregar citas al state
+        const citasNuevo = [...citas, cita];
+        setCitas(citasNuevo);
+
+        //ocultar el formulario
+        guardarMostrarForm(false);
+        //resetear el formulario
+
+    };
+
+    //mostrar alerta si falla la validacion
+    const mostrarAlerta = () => {
+        Alert.alert(
+            "Faltan datos",
+            "complete todos los campos",
+            [
+                {
+                    text: 'Ok'
+                }
+            ]
+        );
+    }
     return (
         <>
-            <View style={styles.formulario}>
+            <ScrollView style={styles.formulario}>
                 <View>
                     <Text style={styles.label}>Paciente:</Text>
                     <TextInput
                         style={styles.imput}
-                        onChangeText={(v) => console.log(v)}
+                        onChangeText={texto => guardarPaciente(texto)}
                     />
                 </View>
+
                 <View>
                     <Text style={styles.label}>Dueño:</Text>
                     <TextInput
                         style={styles.imput}
-                        onChangeText={(v) => console.log(v)}
+                        onChangeText={texto => guardarPropietario(texto)}
                     />
                 </View>
+
                 <View>
                     <Text style={styles.label}>Telefono Contacto:</Text>
                     <TextInput
                         style={styles.imput}
-                        onChangeText={(v) => console.log(v)}
+                        onChangeText={texto => guardarTelefono(texto)}
                         keyboardType="numeric"
                     />
                 </View>
+
                 <View>
                     <Text style={styles.label}>Fecha:</Text>
                     <Button title="Seleccionar Fecha" onPress={showDatePicker} />
@@ -76,6 +130,7 @@ const Formulario = () => {
                     />
                     <Text>{fecha}</Text>
                 </View>
+
                 <View>
                     <Text style={styles.label}>Hora:</Text>
                     <Button title="Seleccionar Hora" onPress={showTimePicker} />
@@ -89,15 +144,23 @@ const Formulario = () => {
                     />
                     <Text>{hora}</Text>
                 </View>
+
                 <View>
                     <Text style={styles.label}>Sintomas:</Text>
                     <TextInput
                         style={styles.imput}
                         multiline
-                        onChangeText={(v) => console.log(v)}
+                        onChangeText={texto => guardarSintomas(texto)}
                     />
                 </View>
-            </View>
+
+                <View>
+                    <TouchableHighlight onPress={() => crearNuevaCita()} style={styles.btnSubmit}>
+                        <Text style={styles.textobtnSubmit}>Crear Nueva Cita</Text>
+                    </TouchableHighlight>
+                </View>
+
+            </ScrollView>
         </>
     );
 };
@@ -107,7 +170,7 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         paddingHorizontal: 20,
         paddingVertical: 10,
-        marginHorizontal: '2.5%',
+
     },
 
     label: {
@@ -122,6 +185,18 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderStyle: 'solid',
     },
+
+    btnSubmit: {
+        padding: 10,
+        backgroundColor: '#7d024e',
+        marginVertical: 10,
+    },
+
+    textobtnSubmit: {
+        color: '#FFF',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    }
 });
 
 export default Formulario;

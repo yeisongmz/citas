@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, Text, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
 //componente Cita
-const Cita = ({cita, pacienteEliminar}) => {
-  
+const Cita = ({ cita, pacienteEliminar }) => {
+
   const dialogiEliminar = (id) => {
     console.log('Boton fue precionado. . .');
     pacienteEliminar(id);
@@ -26,7 +26,7 @@ const Cita = ({cita, pacienteEliminar}) => {
       </View>
 
       <View>
-        <TouchableHighlight onPress={  () => dialogiEliminar(cita.id) } style={styles.btnEliminar}>
+        <TouchableHighlight onPress={() => dialogiEliminar(cita.id)} style={styles.btnEliminar}>
           <Text style={styles.textoEliminar}> Eliminar &times; </Text>
         </TouchableHighlight>
       </View>
@@ -34,7 +34,7 @@ const Cita = ({cita, pacienteEliminar}) => {
 
 
 
-  {/*opcion uno de botones*/}
+      {/*opcion uno de botones*/}
       {/* <Button title="Eliminar"/> */}
 
     </View>
@@ -42,32 +42,37 @@ const Cita = ({cita, pacienteEliminar}) => {
 };
 
 const styles = StyleSheet.create({
-    cita: {
-      backgroundColor: 'white',
-      borderBottomColor: '#e1e1e1',
-      borderStyle: 'solid',
-      borderBottomWidth: 1,
-      paddingVertical: 20,
-      paddingHorizontal: 10,
-    },
-    label:{
-      fontWeight: 'bold',
-      fontSize: 18,
-      marginTop: 20
-    },
-    texto: {
-        fontSize: 18,
-    },
-    btnEliminar:{
-      padding: 10,
-      backgroundColor: 'red',
-      marginVertical: 10,
-    },
-    textoEliminar: {
-      color: '#FFF',
-      fontWeight: 'bold',
-      textAlign: 'center',
-    }
+
+  cita: {
+    backgroundColor: 'white',
+    borderBottomColor: '#e1e1e1',
+    borderStyle: 'solid',
+    borderBottomWidth: 1,
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+
+  label: {
+    fontWeight: 'bold',
+    fontSize: 18,
+    marginTop: 20
+  },
+
+  texto: {
+    fontSize: 18,
+  },
+
+  btnEliminar: {
+    padding: 10,
+    backgroundColor: 'red',
+    marginVertical: 10,
+  },
+
+  textoEliminar: {
+    color: '#FFF',
+    fontWeight: 'bold',
+    textAlign: 'center',
+  }
 })
 
 export default Cita;
