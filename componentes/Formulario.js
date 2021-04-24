@@ -4,7 +4,9 @@ import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import shortid from 'shortid';
 
 //componente formulario
-const Formulario = ({citas, setCitas, guardarMostrarForm}) => {
+const Formulario = ( {citas, setCitas, guardarMostrarForm} ) => {
+    
+    
     const [paciente, guardarPaciente] = useState('');
     const [propietario, guardarPropietario] = useState('');
     const [telefono, guardarTelefono] = useState('');
@@ -61,7 +63,7 @@ const Formulario = ({citas, setCitas, guardarMostrarForm}) => {
             //falla la validacion
             console.log('ha fallado crear nueva cita');
             return;
-        }
+            }
 
         // pasa la validacion
          
@@ -78,18 +80,7 @@ const Formulario = ({citas, setCitas, guardarMostrarForm}) => {
 
     };
 
-    //mostrar alerta si falla la validacion
-    const mostrarAlerta = () => {
-        Alert.alert(
-            "Faltan datos",
-            "complete todos los campos",
-            [
-                {
-                    text: 'Ok'
-                }
-            ]
-        );
-    }
+
     return (
         <>
             <ScrollView style={styles.formulario}>
