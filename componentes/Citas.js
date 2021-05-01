@@ -2,11 +2,11 @@ import React from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 
 //componente Cita
-const Cita = ({ cita, pacienteEliminar }) => {
+const Cita = ( { cita, eliminarPaciente } ) => {
 
   const dialogiEliminar = (id) => {
     console.log('Boton fue precionado. . .');
-    pacienteEliminar(id);
+    eliminarPaciente(id);
   }
 
 

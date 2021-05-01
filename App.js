@@ -1,58 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableHighlight, TouchableWithoutFeedback, Keyboard, ScrollView } from 'react-native';
 import Cita from './componentes/Citas';
 import Formulario from './componentes/Formulario';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const App = () => {
-  const [mostrarForm, guardarMostrarForm] = useState(false);
-  // definir el state
   const [citas, setCitas] = useState([
 
-    {id: '1', paciente: 'Hook', propietario: 'Juan', sintomas: 'No Come'},
-    {id: '2', paciente: 'Redux', propietario: 'Itzel', sintomas: 'No Duerme'},
-    {id: '3', paciente: 'Native', propietario: 'Josue', sintomas: 'No Canta'},
-  ]);
+    /*     {id: '1', paciente: 'Hook', propietario: 'Juan', sintomas: 'No Come'},
+        {id: '2', paciente: 'Redux', propietario: 'Itzel', sintomas: 'No Duerme'},
+        {id: '3', paciente: 'Native', propietario: 'Josue', sintomas: 'No Canta'}, */
+      ]);
+  const [mostrarForm, guardarMostrarForm] = useState(false);
+
+  // definir el state citas
+
+
+  useEffect(()=>{
+    obtenerCitasStorage();
+  },[]);
+
 
   //Elimina los pacientes del state
   const eliminarPaciente = (id) => {
-
+    const citasFiltradas = citas.filter(cita => cita.id !== id);
     //console.log('se eliminará: ', id)
-    setCitas((citasActuales) => {
-
-      console.log('Imprimo antes de filtrar: ', citasActuales)
-      citasActuales = citasActuales.filter(cita => cita.id !== id)
-      console.log('imprimo despues de filtar: ', citasActuales)
-
-      return citasActuales
-    }
-    )
-    console.log('Se eliminó: ', id)
+    setCitas(citasFiltradas);
+    guardarCitasStorage(JSON.stringify(citasFiltradas));
   }
 
 
-  //Agregar pacientes
-  /*   const agregarPacientes = () => {
-      setCitas( (citasActuales) => {
-        let count = 0
-        citasActuales = citasActuales
-        console.log('comienza la carga de pacientes')
-        while ( count <= 100 ) {
-            count = citasActuales.push(citasActuales)
-        }
-        return citasActuales
-      } 
-      )
-      console.log('los pacientes fueron agregados')
-    } */
 
 
   // Muestra u oculta el formulario
   const mostrarFormulario = () => {
     guardarMostrarForm(!mostrarForm);
   }
+  //funcion cerrar teclado
   const cerrarTeclado = () => {
     Keyboard.dismiss();
+  }
+
+
+
+  //Almacenar las citas en el storage
+  const guardarCitasStorage = async (citasJSON) => {
+    try {
+      await AsyncStorage.setItem('citas', citasJSON);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  //Obtener las citas
+  const obtenerCitasStorage = async ()=>{
+    try {
+      const citasStorage = await AsyncStorage.getItem('citas');
+      if (citasStorage){
+        setCitas(JSON.parse(citasStorage));
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
 
 
@@ -78,7 +87,8 @@ const App = () => {
               <Formulario
                 citas={citas}
                 setCitas={setCitas}
-                guardarMostrarForm={guardarMostrarForm} />
+                guardarMostrarForm={guardarMostrarForm}
+                guardarCitasStorage={guardarCitasStorage} />
               
             </>
           ) :
@@ -89,7 +99,7 @@ const App = () => {
                 <FlatList
                   style={styles.listado}
                   data={citas}
-                  renderItem={({ item }) => <Cita cita={item} pacienteEliminar={eliminarPaciente} />}
+                  renderItem= { ( {item} ) =>  <Cita cita={item} eliminarPaciente={eliminarPaciente}/> }
                   keyExtractor={cita => cita.id}
                 />
               </>
